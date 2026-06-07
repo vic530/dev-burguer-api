@@ -1,0 +1,18 @@
+const { resolve } = require('node:path');
+
+module.exports = {
+  config: resolve(__dirname, 'src', 'config', 'database.cjs'),
+  'models-path': resolve(__dirname, 'src', 'app', 'models'),
+  'migrations-path': resolve(__dirname, 'src', 'database', 'migrations'),
+};
+
+
+
+/*
+.sequelizerc é um arquivo de configuração para o Sequelize CLI, que é uma ferramenta de linha de comando para gerenciar 
+bancos de dados usando o Sequelize. Ele define os caminhos para os arquivos de configuração do banco de dados, as 
+migrações e os modelos.
+
+- config: é o caminho para o arquivo de configuração do banco de dados, que contém as informações de conexão, como o 
+nome do banco, usuário, senha, host e porta.
+*/
