@@ -1,7 +1,6 @@
-import * as Yup from 'yup';
-import Category from './../models/Category.js';
-import Product from './../models/Product.js';
-
+import * as Yup from "yup";
+import Category from "./../models/Category.js";
+import Product from "./../models/Product.js";
 
 class ProductsController {
   async store(req, res) {
@@ -22,7 +21,6 @@ class ProductsController {
     const { filename } = req.file;
 
     try {
-
       const newProduct = await Product.create({
         name,
         price,
@@ -32,24 +30,63 @@ class ProductsController {
       });
 
       return res.status(201).json(newProduct);
-      
     } catch (error) {
-      console.log('ERRO COMPLETO');
+      console.log("ERRO COMPLETO");
       console.log(error);
 
-      console.log('ERRO ORIGINAL');
+      console.log("ERRO ORIGINAL");
       console.log(error.original);
 
       return res.status(500).json(error.message);
     }
   }
 
+  async update(req, res) {
+    const schema = Yup.object({
+      name: Yup.string(),
+      price: Yup.number(),
+      category_id: Yup.number(),
+      offer: Yup.boolean(),
+    });
+
+    try {
+      schema.validateSync(req.body, { abortEarly: false });
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
+
+    const { name, price, category_id, offer } = req.body;
+    const { id } = req.params;
+    console.log("ID recebido:", id, typeof id); 
+
+    let path;
+    if (req.file) {
+      const { filename } = req.file;
+      path = filename;
+    }
+
+    await Product.update(
+      {
+        name,
+        price,
+        category_id,
+        path,
+        offer,
+      },
+      {
+        where: { id },
+      },
+    );
+
+    return res.status(200).json();
+  }
+
   async index(_req, res) {
     const products = await Product.findAll({
       include: {
         model: Category,
-        as: 'category',
-        asttributes: ['id', 'name'],
+        as: "category",
+        attributes: ["id", "name"],
       },
     });
 

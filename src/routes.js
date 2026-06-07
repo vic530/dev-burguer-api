@@ -20,6 +20,7 @@ routes.post('/session', SessionController.store);
 
 routes.use(authMiddleware);
 routes.post('/products', adminMiddleware,upload.single('file'), ProductsController.store);
+routes.put('/products/:id', adminMiddleware,upload.single('file'), ProductsController.update);
 routes.get('/products', ProductsController.index);
 
 routes.post('/categories', adminMiddleware, CategoryController.store);
