@@ -34,7 +34,11 @@ class SessionController {
       return emalOrPasswordIsInvalid();
     }
 
-    const token = jwt.sign({id: existingUser.id, admin: existingUser.admin}, 
+    const token = jwt.sign({
+      id: existingUser.id, 
+      admin: existingUser.admin, 
+      name: existingUser.name
+      }, 
       authConfig.secret,
       {
         expiresIn: authConfig.expiresIn,
