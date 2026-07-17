@@ -3,7 +3,7 @@ module.exports = {
     host: 'localhost',
     port: 5432,
     username: 'admin',
-    password: '11235813',
+    password: 'admin',
     database: 'dev-burguer-db',
     define: {
         timestamps: true,
